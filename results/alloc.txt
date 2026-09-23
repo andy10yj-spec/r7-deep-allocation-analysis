@@ -1,0 +1,143 @@
+==============================================================================================================
+[DEEP ALLOCATION BOTTLENECK]   offline, engine 0
+==============================================================================================================
+
+  [FORCED PREFIX]  iterate 의 forced prefix 길이 (fp)
+    sangen (20000 iterate)
+      분포 : 0:0.0% 1:4.2% 2:5.5% 3:6.6% 4:6.6% 5:7.1% 6:7.5% 7:6.1% 8:5.5% 9:3.9% 10:4.0% 11-19:23.1% 20-29:12.7% 30-39:6.0% 40+:1.1%
+      P(fp>=k)        k=5 77.05%  k=10 46.90%  k=20 19.80%  k=30 7.13%  k=35 3.35%  k=40 1.12%
+      P(frontier>=k)  k=5 90.75%  k=10 61.55%  k=20 22.05%  k=30 8.16%  k=35 4.13%  k=40 1.45%
+      P(line end>=k)  k=5 92.33%  k=10 68.71%  k=20 36.65%  k=30 15.95%  k=35 9.79%  k=40 4.50%
+      fp 중앙 9 / 90% 26 / 최대 52
+    chundra (15000 iterate)
+      분포 : 0:0.0% 1:0.8% 2:1.9% 3:2.1% 4:2.7% 5:2.7% 6:4.6% 7:4.7% 8:4.3% 9:4.7% 10:5.2% 11-19:37.6% 20-29:20.0% 30-39:7.0% 40+:1.7%
+      P(fp>=k)        k=5 92.51%  k=10 71.50%  k=20 28.75%  k=30 8.71%  k=35 3.82%  k=40 1.70%
+      P(frontier>=k)  k=5 95.90%  k=10 81.50%  k=20 32.45%  k=30 10.11%  k=35 4.51%  k=40 1.99%
+      P(line end>=k)  k=5 95.95%  k=10 93.33%  k=20 55.77%  k=30 21.85%  k=35 11.83%  k=40 4.64%
+      fp 중앙 14 / 90% 29 / 최대 51
+
+  [NMCS COMMIT]  nmcs_inner 시작 depth = commit depth (start-1)
+    sangen   probe  <20 3923 (85.7%) / 20-39 627 (13.7%) / 40+ 25 (0.5%)   iterate  17054 / 2839 / 103
+    chundra  probe  <20 2368 (77.6%) / 20-39 642 (21.0%) / 40+ 43 (1.4%)   iterate  11958 / 2917 / 122
+
+  [NMCS CALL]  Sangen trajectory: call 당 commit 수와 도달한 최대 commit depth
+    seed 20260917  baseline 재현 PASS | call 31, call 당 commit 평균 9.3 (중앙 5, 최대 48)
+      call 당 최대 commit depth : 평균 8.3 중앙 4 90% 21 최대 47
+      commit depth : <20 231 / 20-39 50 / 40+ 8   commit 당 후보 평균 3.7, probe 평균 3.7
+      call 종료 : {'다음 노드 terminal': 30, '예산 소진/기타': 1}
+    seed 12345     baseline 재현 PASS | call 33, call 당 commit 평균 9.0 (중앙 6, 최대 36)
+      call 당 최대 commit depth : 평균 8.0 중앙 5 90% 21 최대 35
+      commit depth : <20 257 / 20-39 41 / 40+ 0   commit 당 후보 평균 3.8, probe 평균 3.8
+      call 종료 : {'다음 노드 terminal': 32, '예산 소진/기타': 1}
+    seed 777       baseline 재현 PASS | call 45, call 당 commit 평균 6.9 (중앙 2, 최대 40)
+      call 당 최대 commit depth : 평균 5.9 중앙 1 90% 21 최대 39
+      commit depth : <20 261 / 20-39 51 / 40+ 0   commit 당 후보 평균 3.7, probe 평균 3.7
+      call 종료 : {'다음 노드 terminal': 44, '예산 소진/기타': 1}
+
+  [DEEP NODE BOTTLENECK]  비종단 노드, 후보>=2
+    sangen
+      metric                                       depth<20   depth20-39     depth40+
+      node count                                      21676        26068         2576
+      iterate arrival (forced+tree 경로)               249954        36656         1132
+      tree pick (pick_action 호출)                      33834         4057          224
+      tree pick 받은 노드                                  5831         2230          135
+      tree expansion (untried pop)                    10556         3185          177
+      rollout arrival (visits-arrival, 추정)            24923        28498         2835
+      untried remaining                               56143        78846         7389
+      untried>0 노드                                    18395        25205         2526
+      incoming>=2 노드                                   2195         1076          110
+      mean visits                                      12.7          2.5          1.5
+      first-new-expansion (그 depth 에서 break)           8545         2715          160
+      forced prefix (frontier 가 그 band 인 iterate)          8.0         26.9         43.2
+    chundra
+      metric                                       depth<20   depth20-39     depth40+
+      node count                                      28523        30145         1375
+      iterate arrival (forced+tree 경로)               228111        38162         1245
+      tree pick (pick_action 호출)                      17774         4391          241
+      tree pick 받은 노드                                  5597         2563          132
+      tree expansion (untried pop)                     9286         3554          178
+      rollout arrival (visits-arrival, 추정)            31778        32877         1536
+      untried remaining                               80568        87133         3884
+      untried>0 노드                                    26311        29269         1316
+      incoming>=2 노드                                   3152         1519           58
+      mean visits                                       9.1          2.4          2.0
+      first-new-expansion (그 depth 에서 break)           8420         3024          119
+      forced prefix (frontier 가 그 band 인 iterate)         10.8         26.2         43.5
+    sangen 20260917
+      metric                                       depth<20   depth20-39     depth40+
+      node count                                       5928         8692         1595
+      iterate arrival (forced+tree 경로)                66000        13177          962
+      tree pick (pick_action 호출)                       7967         1172          181
+      tree pick 받은 노드                                  1538          673          111
+      tree expansion (untried pop)                     2692          933          144
+      rollout arrival (visits-arrival, 추정)             6871         9332         1822
+      untried remaining                               15908        26521         4517
+      untried>0 노드                                     5099         8452         1556
+      incoming>=2 노드                                    743          441          104
+      mean visits                                      12.3          2.6          1.7
+      first-new-expansion (그 depth 에서 break)           2199          844          135
+      forced prefix (frontier 가 그 band 인 iterate)          8.4         27.6         43.9
+
+  [DEPTH>=40 도달 단계]  run 별, iterate 5,000 기준
+    run               node>=40 | line>=40 front>=40   fp>=40 | fp>=40 iterate: tree 결정/종료   | front>=40 인 iterate 의 fp
+    sangen_20260917       1595 |      480      188      158 | tree 1.16 {'new expansion': 129, 'terminal': 29} | fp<35 0 / 35-39 30 / 40+ 158
+    sangen_12345           268 |      105        8        4 | tree 0.25 {'terminal': 4}    | fp<35 0 / 35-39 4 / 40+ 4
+    sangen_777             269 |       88       13        5 | tree 0.00 {'terminal': 5}    | fp<35 0 / 35-39 8 / 40+ 5
+    sangen_8888            444 |      227       80       58 | tree 0.78 {'terminal': 36, 'new expansion': 22} | fp<35 0 / 35-39 22 / 40+ 58
+    chundra_20260917       330 |      100        0        0 | tree 0.00 {}                 | fp<35 0 / 35-39 0 / 40+ 0
+    chundra_12345          197 |      125       28       16 | tree 0.38 {'terminal': 11, 'new expansion': 5} | fp<35 0 / 35-39 12 / 40+ 16
+    chundra_777            848 |      471      271      239 | tree 0.97 {'terminal': 128, 'new expansion': 111} | fp<35 0 / 35-39 32 / 40+ 239
+
+  [SELECTION REASON]  pick_action 호출 분해
+    sangen
+      <20    pick  33834 | UNTRIED  10556 ( 31.2%) | 소진 후 선택  23278 ( 68.8%)
+      20-39  pick   4057 | UNTRIED   3185 ( 78.5%) | 소진 후 선택    872 ( 21.5%)
+      40+    pick    224 | UNTRIED    177 ( 79.0%) | 소진 후 선택     47 ( 21.0%)
+      소진 후 선택의 전체 분해(STAT, depth 구분 불가): LEAST_VISITED 12215 (50.5%) / MAX_VALUE 11982 (49.5%)
+    chundra
+      <20    pick  17774 | UNTRIED   9286 ( 52.2%) | 소진 후 선택   8488 ( 47.8%)
+      20-39  pick   4391 | UNTRIED   3554 ( 80.9%) | 소진 후 선택    837 ( 19.1%)
+      40+    pick    241 | UNTRIED    178 ( 73.9%) | 소진 후 선택     63 ( 26.1%)
+      소진 후 선택의 전체 분해(STAT, depth 구분 불가): LEAST_VISITED 4792 (51.0%) / MAX_VALUE 4596 (49.0%)
+
+  [FIRST NEW EXPANSION]  fp band 별: prefix 뒤 몇 결정 만에 break 했는가
+    sangen
+      fp <20    iterate  16041 | new expansion  53.5% (prefix 뒤 평균 2.35 결정, 절대 depth 평균 11.8) | terminal  46.5%
+      fp 20-39  iterate   3734 | new expansion  72.0% (prefix 뒤 평균 1.23 결정, 절대 depth 평균 27.9) | terminal  28.0%
+      fp 40+    iterate    225 | new expansion  67.1% (prefix 뒤 평균 1.27 결정, 절대 depth 평균 44.4) | terminal  32.9%
+    chundra
+      fp <20    iterate  10688 | new expansion  79.5% (prefix 뒤 평균 1.79 결정, 절대 depth 평균 13.0) | terminal  20.5%
+      fp 20-39  iterate   4057 | new expansion  72.6% (prefix 뒤 평균 1.19 결정, 절대 depth 평균 27.0) | terminal  27.4%
+      fp 40+    iterate    255 | new expansion  45.5% (prefix 뒤 평균 1.27 결정, 절대 depth 평균 43.8) | terminal  54.5%
+
+  [COUNTERFACTUAL A]  first-new-expansion break 제거 (prefix 그대로)
+    제어 흐름상: break 가 없으면 pick_action 이 terminal 까지 계속 불린다.
+    엔진이 가는 depth 는 그대로(라인은 원래 terminal 까지 간다), 바뀌는 것은
+    rollout 구간이 tree 규칙(untried pop / 교대 선택)으로 바뀌는 것뿐이다.
+    sangen_20260917   tree 결정   9320 ->  30523 | tree 가 depth>=20 닿는 iterate  1285 ->  2157 | depth>=40  188 ->  480
+    sangen_12345      tree 결정   9628 ->  26691 | tree 가 depth>=20 닿는 iterate   891 ->  1711 | depth>=40    8 ->  105
+    sangen_777        tree 결정   9218 ->  25091 | tree 가 depth>=20 닿는 iterate  1052 ->  1755 | depth>=40   13 ->   88
+    sangen_8888       tree 결정   9949 ->  23486 | tree 가 depth>=20 닿는 iterate  1181 ->  1706 | depth>=40   80 ->  227
+    chundra_20260917  tree 결정   7570 ->  34269 | tree 가 depth>=20 닿는 iterate  1423 ->  2620 | depth>=40    0 ->  100
+    chundra_12345     tree 결정   7746 ->  33591 | tree 가 depth>=20 닿는 iterate  1742 ->  2998 | depth>=40   28 ->  125
+    chundra_777       tree 결정   7090 ->  32300 | tree 가 depth>=20 닿는 iterate  1702 ->  2748 | depth>=40  271 ->  471
+
+    기존 기록 간선만 따라갈 수 있는 양 (추정, 최종 그래프 기준)
+    break 뒤 child 에서 untried 를 pop 할 때 그 action 에 기록된 간선이 있을 확률
+    = sum(untried 중 간선 있음) / sum(untried).  경로별 정확 재현은 NOT RECOVERABLE
+    (iterate 행에 경로 노드 id 가 없고 JSON 에 간선 목록이 저장되지 않았다)
+      sangen   <20    p = 0.367  -> 기록 간선으로 이어질 기대 추가 결정 p/(1-p) = 0.58
+      sangen   20-39  p = 0.336  -> 기록 간선으로 이어질 기대 추가 결정 p/(1-p) = 0.51
+      sangen   40+    p = 0.359  -> 기록 간선으로 이어질 기대 추가 결정 p/(1-p) = 0.56
+      chundra  <20    p = 0.351  -> 기록 간선으로 이어질 기대 추가 결정 p/(1-p) = 0.54
+      chundra  20-39  p = 0.351  -> 기록 간선으로 이어질 기대 추가 결정 p/(1-p) = 0.54
+      chundra  40+    p = 0.350  -> 기록 간선으로 이어질 기대 추가 결정 p/(1-p) = 0.54
+
+  [COUNTERFACTUAL B]  tree 규칙 그대로, prefix 만 더 깊게 준다면
+    sangen_20260917   depth>=40 결정노드  1595, 후보  4699, untried  4517, value>=9000 노드  495 | 현재 fp>=40 iterate 당 tree 결정 1.16
+    sangen_12345      depth>=40 결정노드   268, 후보   905, untried   905, value>=9000 노드   17 | 현재 fp>=40 iterate 당 tree 결정 0.25
+    sangen_777        depth>=40 결정노드   269, 후보   793, untried   793, value>=9000 노드   14 | 현재 fp>=40 iterate 당 tree 결정 0.00
+    sangen_8888       depth>=40 결정노드   444, 후보  1213, untried  1174, value>=9000 노드  134 | 현재 fp>=40 iterate 당 tree 결정 0.78
+    chundra_20260917  depth>=40 결정노드   330, 후보  1170, untried  1170, value>=9000 노드    3 | 현재 fp>=40 iterate 당 tree 결정 0.00
+    chundra_12345     depth>=40 결정노드   197, 후보   551, untried   542, value>=9000 노드   42 | 현재 fp>=40 iterate 당 tree 결정 0.38
+    chundra_777       depth>=40 결정노드   848, 후보  2383, untried  2172, value>=9000 노드  271 | 현재 fp>=40 iterate 당 tree 결정 0.97

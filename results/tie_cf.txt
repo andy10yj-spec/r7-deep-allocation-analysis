@@ -1,0 +1,49 @@
+============================================================================================================
+[106 TERMINAL COMMITS]  Sangen trajectory 3 seed
+============================================================================================================
+  count 106 | all-zero 73 (68.9%) | value>0 33 (31.1%)
+  nonterminal tied candidate 있음 83 (78.3%) | 없음 23
+    all-zero 중 72 / value>0 중 11
+  선택 경로 : {'min_vis0': 84, 'hold': 22}  (hold = TIEHOLD 유지, min_vis0 = 새로 min(vis0,action))
+  선택된 terminal 후보의 기록 continuation (sanity, 1 이어야 함) : {1: 106}
+  commit depth 분포 : {'20-39': 14, '40+': 1, '5-19': 27, '<5': 64}
+  commit 당 후보 수 평균 3.6, 동점 비terminal 후보 수 평균 2.32
+  선택된 후보 vis0 vs 대안 vis0 : 선택 평균 10.6 / 대안 평균 18.8 (선택 < 대안 70, 같음 11, 선택 > 대안 2)
+
+  [COUNTERFACTUAL]  동점 + 비terminal + 최소 vis0 + action index 로 바꿨다면
+    기록된 continuation (commit 노드 이후 terminal 까지 결정 수)
+    전체 106 (대안 없으면 +0)         n=106 | P(+1)  78.3%  P(+2)  78.3%  P(+5)  33.0%  P(+10)   3.8%  P(+20)   0.0% | 평균 3.8 중앙 3 최대 13
+                                     | (probe 내 최장 iterate 기준) 평균 4.7, P(+10) 7.5%, P(+20) 0.9%
+    대안이 있는 commit              n= 83 | P(+1) 100.0%  P(+2) 100.0%  P(+5)  42.2%  P(+10)   4.8%  P(+20)   0.0% | 평균 4.9 중앙 4 최대 13
+                                     | (probe 내 최장 iterate 기준) 평균 5.9, P(+10) 9.6%, P(+20) 1.2%
+    대안 continuation 이 닿는 절대 depth : 평균 9.6 | >=30 8 | >=35 6 | >=40 3 (대안 83 개 중)
+    대안의 best iterate value : >0 11, 평균 830 | 그 (node,action) 의 최종 B : >=9000 4, >=16000 2, >=23000 1
+    비교: 기존 P(fp>=40) Sangen 1.1%% / 기존 선택(terminal) continuation 은 전부 +1
+
+  [20260917 SANGEN]  root(node 0) 에서 끝난 call
+    root a1 첫 nonzero probe: probe 11, call 12 (v=1700)
+    call 4   commit 10   depth 0 | 값 [0, 0, 0, 0, 0] vis0 [150, 9, 8, 2, 9] | 선택 a3(terminal, min_vis0) | a1 v=0 | 대안 a2 cont +10 v=0 최종B 0
+    call 5   commit 11   depth 0 | 값 [0, 0, 0, 0, 0] vis0 [156, 11, 10, 3, 11] | 선택 a3(terminal, hold) | a1 v=0 | 대안 a2 cont +3 v=0 최종B 0
+    call 6   commit 12   depth 0 | 값 [0, 0, 0, 0, 0] vis0 [162, 13, 14, 4, 14] | 선택 a3(terminal, min_vis0) | a1 v=0 | 대안 a1 cont +4 v=0 최종B 23800
+    call 7   commit 13   depth 0 | 값 [0, 0, 0, 0, 0] vis0 [168, 17, 18, 5, 16] | 선택 a3(terminal, hold) | a1 v=0 | 대안 a4 cont +6 v=0 최종B 0
+    call 8   commit 14   depth 0 | 값 [0, 0, 0, 0, 0] vis0 [174, 23, 20, 6, 18] | 선택 a3(terminal, min_vis0) | a1 v=0 | 대안 a4 cont +3 v=0 최종B 0
+    call 9   commit 15   depth 0 | 값 [0, 0, 0, 0, 0] vis0 [177, 28, 26, 7, 20] | 선택 a3(terminal, hold) | a1 v=0 | 대안 a4 cont +6 v=0 최종B 0
+    call 10  commit 16   depth 0 | 값 [0, 0, 0, 0, 0] vis0 [183, 32, 30, 8, 22] | 선택 a3(terminal, min_vis0) | a1 v=0 | 대안 a4 cont +8 v=0 최종B 0
+    call 11  commit 17   depth 0 | 값 [0, 0, 0, 0, 0] vis0 [186, 34, 32, 9, 24] | 선택 a3(terminal, hold) | a1 v=0 | 대안 a4 cont +3 v=0 최종B 0
+    call 14  commit 36   depth 0 | 값 [0, 0, 0, 0, 0] vis0 [201, 329, 40, 12, 30] | 선택 a3(terminal, min_vis0) | a1 v=0 | 대안 a4 cont +3 v=0 최종B 0
+    call 15  commit 37   depth 0 | 값 [0, 0, 0, 0, 0] vis0 [204, 335, 46, 13, 32] | 선택 a3(terminal, hold) | a1 v=0 | 대안 a4 cont +8 v=0 최종B 0
+    call 16  commit 38   depth 0 | 값 [0, 0, 0, 0, 0] vis0 [207, 341, 48, 14, 34] | 선택 a3(terminal, min_vis0) | a1 v=0 | 대안 a4 cont +4 v=0 최종B 0
+    call 21  commit 104  depth 0 | 값 [0, 0, 0, 0, 0] vis0 [226, 1422, 65, 19, 44] | 선택 a3(terminal, min_vis0) | a1 v=0 | 대안 a4 cont +7 v=0 최종B 0
+    root 이외에서 끝난 call 18 개 (commit depth [1, 1, 4, 4, 4, 7, 9, 12, 12, 12, 12, 13, 13, 13, 21, 28, 38, 47])
+
+  [상세]  대안 continuation 상위 10
+    seed 12345     call 29  depth 0   node 0      값 [0, 0, 0, 0, 0] | 선택 a3(+1) -> 대안 a4 +13 (abs 13) v=0 최종B 0 atk 0
+    seed 12345     call 23  depth 24  node 9262   값 [5600, 5600] | 선택 a1(+1) -> 대안 a0 +11 (abs 35) v=5600 최종B 5600 atk 4
+    seed 20260917  call 4   depth 0   node 0      값 [0, 0, 0, 0, 0] | 선택 a3(+1) -> 대안 a2 +10 (abs 10) v=0 최종B 0 atk 1
+    seed 777       call 40  depth 0   node 0      값 [0, 0, 0, 0, 0] | 선택 a3(+1) -> 대안 a4 +10 (abs 10) v=0 최종B 0 atk 0
+    seed 20260917  call 28  depth 28  node 14669  값 [7300, 7300] | 선택 a1(+1) -> 대안 a0 +9 (abs 37) v=7300 최종B 7300 atk 4
+    seed 12345     call 25  depth 0   node 0      값 [0, 0, 0, 0, 0] | 선택 a3(+1) -> 대안 a4 +9 (abs 9) v=0 최종B 0 atk 0
+    seed 12345     call 26  depth 21  node 10573  값 [5600, 5600] | 선택 a1(+1) -> 대안 a0 +9 (abs 30) v=5600 최종B 5600 atk 3
+    seed 777       call 24  depth 1   node 1      값 [0, 0, 0, 0] | 선택 a2(+1) -> 대안 a3 +9 (abs 10) v=0 최종B 0 atk 0
+    seed 777       call 26  depth 21  node 3989   값 [3400, 3400] | 선택 a1(+1) -> 대안 a0 +9 (abs 30) v=3400 최종B 3400 atk 2
+    seed 777       call 27  depth 0   node 0      값 [0, 0, 0, 0, 0] | 선택 a3(+1) -> 대안 a4 +9 (abs 9) v=0 최종B 0 atk 0
